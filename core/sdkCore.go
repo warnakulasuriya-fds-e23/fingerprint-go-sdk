@@ -64,3 +64,9 @@ func (sdk *SDKCore) Identify(probe *templates.SearchTemplate) (isMatched bool, d
 	isMatched, discoveredId = sdk.identify(probe)
 	return
 }
+func (sdk *SDKCore) GetAsByteArray(probe *templates.SearchTemplate) (data *[]byte) {
+	return sdk.getAsByteArray(probe)
+}
+func (sdk *SDKCore) ParseByteArrayToTemplate(data *[]byte) (template *templates.SearchTemplate) {
+	return sdk.parseByteArrayToTemplate(data)
+}
