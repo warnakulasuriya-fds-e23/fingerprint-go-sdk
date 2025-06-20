@@ -52,11 +52,13 @@ func (sdk *sdkCore) LoadImages() {
 func (sdk *sdkCore) LoadCborfiles() {
 	sdkutils.LoadCborDirToGallery(sdk.gallery, sdk.cborDir)
 }
-func (sdk *sdkCore) Extract(imagePath string) {
-	sdk.extract(imagePath)
+func (sdk *sdkCore) Extract(imagePath string) (template *templates.SearchTemplate) {
+	template = sdk.extract(imagePath)
+	return
 }
-func (sdk *sdkCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) {
-	sdk.match(probe, candidate)
+func (sdk *sdkCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) (isMatched bool) {
+	isMatched = sdk.match(probe, candidate)
+	return
 }
 func (sdk *sdkCore) Identify(probe *templates.SearchTemplate) (isMatched bool, discoveredId string) {
 	isMatched, discoveredId = sdk.identify(probe)
