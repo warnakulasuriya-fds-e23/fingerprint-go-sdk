@@ -1,7 +1,7 @@
 package sdkutils
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -25,7 +25,7 @@ func (c *TransparencyContents) Accept(key, mime string, data []byte) error {
 func loadImageToGallery(galleryptr *[]*entities.SearchTemplateRecord, imagePath string, filename string) {
 	image, err := sourceafis.LoadImage(imagePath)
 	if err != nil {
-		fmt.Println("Couldnt LoadImage at path: ", imagePath)
+		log.Println("Couldnt LoadImage at path: ", imagePath)
 		return
 	}
 	l := sourceafis.NewTransparencyLogger(new(TransparencyContents))
@@ -33,13 +33,13 @@ func loadImageToGallery(galleryptr *[]*entities.SearchTemplateRecord, imagePath 
 
 	template, err := tc.Template(image)
 	if err != nil {
-		fmt.Println("Couldnt extract template from Image at path: ", imagePath)
+		log.Println("Couldnt extract template from Image at path: ", imagePath)
 		return
 	}
 	fileNameWithoutExtenstion := strings.TrimSuffix(filename, filepath.Ext(filename))
 	*galleryptr = append(*galleryptr, &entities.SearchTemplateRecord{Id: fileNameWithoutExtenstion, Template: *template})
 
-	fmt.Printf("appended template of %s to gallery\n", filename)
+	log.Printf("appended template of %s to gallery\n", filename)
 
 }
 
@@ -49,7 +49,7 @@ func LoadImagesDirToGallery(galleryptr *[]*entities.SearchTemplateRecord, images
 	// as an argument
 	files, err := os.ReadDir(imagesDir)
 	if err != nil {
-		fmt.Println("error reading directory")
+		log.Println("error reading directory")
 		return
 	}
 

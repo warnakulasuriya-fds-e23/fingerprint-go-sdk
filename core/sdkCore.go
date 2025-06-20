@@ -12,8 +12,8 @@ import (
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork/templates"
 )
 
-// sdkCore will be an opaque type and can only be initialized using NewsdkCore
-type sdkCore struct {
+// SDKCore will be an opaque type and can only be initialized using NewSDKCore
+type SDKCore struct {
 	gallery            *[]*entities.SearchTemplateRecord
 	transparencyLogger *sourceafis.DefaultTransparencyLogger
 	templateCreator    *sourceafis.TemplateCreator
@@ -23,16 +23,16 @@ type sdkCore struct {
 	matchThreshold     float64
 }
 
-func NewsdkCore(imagesDir string, cborDir string) (*sdkCore, error) {
+func NewSDKCore(imagesDir string, cborDir string) (*SDKCore, error) {
 	config.LoadDefaultConfig()
 	config.Config.Workers = runtime.NumCPU()
 
-	l := sourceafis.NewTransparencyLogger(new(CustomTransparencyContents))
+	l := sourceafis.NewTransparencyLogger(new(customTransparencyContents))
 	tc := sourceafis.NewTemplateCreator(l)
 	g := make([]*entities.SearchTemplateRecord, 0, 1300)
 	cntx := context.Background()
 	matchThreshold := 40.00
-	sdk := &sdkCore{
+	sdk := &SDKCore{
 		gallery:            &g,
 		transparencyLogger: l,
 		templateCreator:    tc,
@@ -46,21 +46,27 @@ func NewsdkCore(imagesDir string, cborDir string) (*sdkCore, error) {
 	return sdk, nil
 
 }
-func (sdk *sdkCore) LoadImages() {
+func (sdk *SDKCore) LoadImages() {
 	sdkutils.LoadImagesDirToGallery(sdk.gallery, sdk.imagesDir)
 }
-func (sdk *sdkCore) LoadCborfiles() {
+func (sdk *SDKCore) LoadCborfiles() {
 	sdkutils.LoadCborDirToGallery(sdk.gallery, sdk.cborDir)
 }
-func (sdk *sdkCore) Extract(imagePath string) (template *templates.SearchTemplate) {
+func (sdk *SDKCore) Extract(imagePath string) (template *templates.SearchTemplate) {
 	template = sdk.extract(imagePath)
 	return
 }
-func (sdk *sdkCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) (isMatched bool) {
+func (sdk *SDKCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) (isMatched bool) {
 	isMatched = sdk.match(probe, candidate)
 	return
 }
-func (sdk *sdkCore) Identify(probe *templates.SearchTemplate) (isMatched bool, discoveredId string) {
+func (sdk *SDKCore) Identify(probe *templates.SearchTemplate) (isMatched bool, discoveredId string) {
 	isMatched, discoveredId = sdk.identify(probe)
 	return
+}
+func (sdk *SDKCore) GetAsByteArray(probe *templates.SearchTemplate) (data *[]byte) {
+	return sdk.getAsByteArray(probe)
+}
+func (sdk *SDKCore) ParseByteArrayToTemplate(data *[]byte) (template *templates.SearchTemplate) {
+	return sdk.parseByteArrayToTemplate(data)
 }

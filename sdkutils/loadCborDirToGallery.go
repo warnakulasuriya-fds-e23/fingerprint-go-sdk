@@ -1,7 +1,7 @@
 package sdkutils
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -14,23 +14,23 @@ import (
 func loadCborfileToGallery(galleryptr *[]*entities.SearchTemplateRecord, cborpath string, filename string) {
 	readData, err := os.ReadFile(cborpath)
 	if err != nil {
-		fmt.Println("Error in reading the file at", cborpath)
+		log.Println("Error in reading the file at", cborpath)
 		return
 	}
 	var template templates.SearchTemplate
 	err = cbor.Unmarshal(readData, &template)
 	if err != nil {
-		fmt.Println("Error when while executing unmarshal function for data from ", cborpath)
+		log.Println("Error when while executing unmarshal function for data from ", cborpath)
 	}
 	fileNameWithoutExtenstion := strings.TrimSuffix(filename, filepath.Ext(cborpath))
 	*galleryptr = append(*galleryptr, &entities.SearchTemplateRecord{Id: fileNameWithoutExtenstion, Template: template})
-	fmt.Printf("appended template from %s to gallery\n", filename)
+	log.Printf("appended template from %s to gallery\n", filename)
 }
 
 func LoadCborDirToGallery(galleryptr *[]*entities.SearchTemplateRecord, cborDir string) {
 	files, err := os.ReadDir(cborDir)
 	if err != nil {
-		fmt.Println("Error! Unable to read data")
+		log.Println("Error! Unable to read data")
 	}
 
 	for _, file := range files {

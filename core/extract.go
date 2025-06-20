@@ -7,7 +7,7 @@ import (
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork/templates"
 )
 
-func (sdk *sdkCore) extract(imagePath string) *templates.SearchTemplate {
+func (sdk *SDKCore) extract(imagePath string) *templates.SearchTemplate {
 	Img, err := sourceafis.LoadImage(imagePath)
 	if err != nil {
 		log.Fatal(err.Error())
