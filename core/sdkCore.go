@@ -27,7 +27,7 @@ func NewsdkCore(imagesDir string, cborDir string) (*sdkCore, error) {
 	config.LoadDefaultConfig()
 	config.Config.Workers = runtime.NumCPU()
 
-	l := sourceafis.NewTransparencyLogger(new(CustomTransparencyContents))
+	l := sourceafis.NewTransparencyLogger(new(customTransparencyContents))
 	tc := sourceafis.NewTemplateCreator(l)
 	g := make([]*entities.SearchTemplateRecord, 0, 1300)
 	cntx := context.Background()
