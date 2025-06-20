@@ -10,7 +10,7 @@ import (
 )
 
 func saveTemplateToCborDir(searchTemplateRecordptr *entities.SearchTemplateRecord, cborDir string) {
-	data, err := cbor.Marshal(*searchTemplateRecordptr)
+	data, err := cbor.Marshal(searchTemplateRecordptr.Template)
 	if err != nil {
 		log.Printf("There was an error with Marshalling search template record with id %s\n", searchTemplateRecordptr.Id)
 		return
