@@ -8,7 +8,7 @@ import (
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork/templates"
 )
 
-func (sdk *sdkCore) identify(probe *templates.SearchTemplate) (ismatched bool, discoverId string) {
+func (sdk *SDKCore) identify(probe *templates.SearchTemplate) (ismatched bool, discoverId string) {
 	matcher, err := sourceafis.NewMatcher(sdk.transparencyLogger, probe)
 	if err != nil {
 		log.Fatal(err.Error())
