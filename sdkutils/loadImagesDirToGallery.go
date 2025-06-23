@@ -26,14 +26,14 @@ func (c *TransparencyContents) Accept(key, mime string, data []byte) error {
 func loadImageToGallery(galleryptr *[]*entities.SearchTemplateRecord, imagePath string, filename string) error {
 	image, err := sourceafis.LoadImage(imagePath)
 	if err != nil {
-		return fmt.Errorf("Couldnt LoadImage at path: %s, error: %w", imagePath, err)
+		return fmt.Errorf("couldn't load image at path: %s, error: %w", imagePath, err)
 	}
 	l := sourceafis.NewTransparencyLogger(new(TransparencyContents))
 	tc := sourceafis.NewTemplateCreator(l)
 
 	template, err := tc.Template(image)
 	if err != nil {
-		return fmt.Errorf("Couldnt extract template from Image at path: %s, error: %w ", imagePath, err)
+		return fmt.Errorf("couldn't extract template from image at path: %s, error: %w ", imagePath, err)
 	}
 	fileNameWithoutExtenstion := strings.TrimSuffix(filename, filepath.Ext(filename))
 	*galleryptr = append(*galleryptr, &entities.SearchTemplateRecord{Id: fileNameWithoutExtenstion, Template: *template})

@@ -13,13 +13,13 @@ import (
 func saveTemplateToCborDir(searchTemplateRecordptr *entities.SearchTemplateRecord, cborDir string) error {
 	data, err := cbor.Marshal(searchTemplateRecordptr.Template)
 	if err != nil {
-		fmt.Errorf("There was an error with Marshalling search template record with id %s, error: %w", searchTemplateRecordptr.Id, err)
+		return fmt.Errorf("there was an error with marshalling search template record with id %s, error: %w", searchTemplateRecordptr.Id, err)
 	}
 	saveFilePath := filepath.Join(cborDir, searchTemplateRecordptr.Id+".cbor")
 
 	err = os.WriteFile(saveFilePath, data, 0755)
 	if err != nil {
-		return fmt.Errorf("There was an error writing to %s, error: %w", saveFilePath, err)
+		return fmt.Errorf("there was an error writing to %s, error: %w", saveFilePath, err)
 	}
 
 	log.Printf("Successfully saved %s \n", searchTemplateRecordptr.Id+".cbor")
