@@ -1,20 +1,25 @@
 package core
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork"
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork/templates"
 )
 
-func (sdk *SDKCore) extract(imagePath string) *templates.SearchTemplate {
+func (sdk *SDKCore) extract(imagePath string) (templateptr *templates.SearchTemplate, err error) {
 	Img, err := sourceafis.LoadImage(imagePath)
 	if err != nil {
-		log.Fatal(err.Error())
+		templateptr = nil
+		err = fmt.Errorf("error while trying to load single image at %s using sourceafis: %w", imagePath, err)
+		return
 	}
-	template, err := sdk.templateCreator.Template(Img)
+	templateptr, err = sdk.templateCreator.Template(Img)
 	if err != nil {
-		log.Fatal(err.Error())
+		templateptr = nil
+		err = fmt.Errorf("error while trying to get the template using sourceafis templatecreator: %w", err)
+		return
 	}
-	return template
+	err = nil
+	return
 }
