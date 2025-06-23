@@ -18,6 +18,7 @@ func (sdk *SDKCore) extract(imagePath string) (templateptr *templates.SearchTemp
 	if err != nil {
 		templateptr = nil
 		err = fmt.Errorf("error while trying to get the template using sourceafis templatecreator: %w", err)
+		return
 	}
 	err = nil
 	return

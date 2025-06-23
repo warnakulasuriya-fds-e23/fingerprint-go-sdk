@@ -13,6 +13,7 @@ func (sdk *SDKCore) parseByteArrayToTemplate(data *[]byte) (templateptr *templat
 	if err != nil {
 		templateptr = nil
 		err = fmt.Errorf("error when while executing unmarshal function for data: %w ", err)
+		return
 	}
 	templateptr = &template
 	err = nil

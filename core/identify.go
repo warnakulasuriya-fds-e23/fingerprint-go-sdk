@@ -14,6 +14,7 @@ func (sdk *SDKCore) identify(probe *templates.SearchTemplate) (ismatched bool, d
 		ismatched = false
 		discoverId = "error"
 		err = fmt.Errorf("error when creating a new matcher using sourceafis: %w", err)
+		return
 	}
 	max := -10000.0
 	var matchingRecord *entities.SearchTemplateRecord
