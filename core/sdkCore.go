@@ -85,21 +85,23 @@ func (sdk *SDKCore) LoadCborfiles() error {
 func (sdk *SDKCore) SaveGallery() error {
 	return sdkutils.SaveGalleryToCborDir(sdk.gallery, sdk.cborDir)
 }
-func (sdk *SDKCore) Extract(imagePath string) (template *templates.SearchTemplate) {
-	template = sdk.extract(imagePath)
+func (sdk *SDKCore) Extract(imagePath string) (template *templates.SearchTemplate, err error) {
+	template, err = sdk.extract(imagePath)
 	return
 }
-func (sdk *SDKCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) (isMatched bool) {
-	isMatched = sdk.match(probe, candidate)
+func (sdk *SDKCore) Match(probe *templates.SearchTemplate, candidate *templates.SearchTemplate) (isMatch bool, err error) {
+	isMatch, err = sdk.match(probe, candidate)
 	return
 }
-func (sdk *SDKCore) Identify(probe *templates.SearchTemplate) (isMatched bool, discoveredId string) {
-	isMatched, discoveredId = sdk.identify(probe)
+func (sdk *SDKCore) Identify(probe *templates.SearchTemplate) (isMatched bool, discoveredId string, err error) {
+	isMatched, discoveredId, err = sdk.identify(probe)
 	return
 }
-func (sdk *SDKCore) GetAsByteArray(probe *templates.SearchTemplate) (data *[]byte) {
-	return sdk.getAsByteArray(probe)
+func (sdk *SDKCore) GetAsByteArray(probe *templates.SearchTemplate) (data *[]byte, err error) {
+	data, err = sdk.getAsByteArray(probe)
+	return
 }
-func (sdk *SDKCore) ParseByteArrayToTemplate(data *[]byte) (template *templates.SearchTemplate) {
-	return sdk.parseByteArrayToTemplate(data)
+func (sdk *SDKCore) ParseByteArrayToTemplate(data *[]byte) (template *templates.SearchTemplate, err error) {
+	template, err = sdk.parseByteArrayToTemplate(data)
+	return
 }

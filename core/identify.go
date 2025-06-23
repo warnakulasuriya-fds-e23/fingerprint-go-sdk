@@ -1,17 +1,19 @@
 package core
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/warnakulasuriya-fds-e23/fingerprint-go-sdk/entities"
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork"
 	"github.com/warnakulasuriya-fds-e23/go-sourceafis-fork/templates"
 )
 
-func (sdk *SDKCore) identify(probe *templates.SearchTemplate) (ismatched bool, discoverId string) {
+func (sdk *SDKCore) identify(probe *templates.SearchTemplate) (ismatched bool, discoverId string, err error) {
 	matcher, err := sourceafis.NewMatcher(sdk.transparencyLogger, probe)
 	if err != nil {
-		log.Fatal(err.Error())
+		ismatched = false
+		discoverId = "error"
+		err = fmt.Errorf("error when creating a new matcher using sourceafis: %w", err)
 	}
 	max := -10000.0
 	var matchingRecord *entities.SearchTemplateRecord
@@ -30,7 +32,8 @@ func (sdk *SDKCore) identify(probe *templates.SearchTemplate) (ismatched bool, d
 		ismatched = false
 		discoverId = "none"
 	}
-	// automatically returns the values of ismatched and discoverId
+	err = nil
+	// automatically returns the values of ismatched, discoveredId and err
 	return
 
 }
