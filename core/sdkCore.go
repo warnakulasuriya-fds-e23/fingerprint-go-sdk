@@ -46,14 +46,32 @@ func NewSDKCore(imagesDir string, cborDir string) (*SDKCore, error) {
 	return sdk, nil
 
 }
-func (sdk *SDKCore) UpdateImageDir(newImagesDir string) {
+func (sdk *SDKCore) UpdateImageDir(newImagesDir string) (message string, err error) {
+	err = sdkutils.ProcessDirPathString(&newImagesDir)
+	if err != nil {
+		message = "Error Occured"
+		//err alredy set
+		return
+	}
 	sdk.imagesDir = newImagesDir
+	message = "successfully updated"
+	err = nil
+	return
 }
 func (sdk *SDKCore) GetImagesDir() string {
 	return sdk.imagesDir
 }
-func (sdk *SDKCore) UpdateCborDir(newCborDir string) {
-	sdk.cborDir = newCborDir
+func (sdk *SDKCore) UpdateCborDir(newCborDir string) (message string, err error) {
+	err = sdkutils.ProcessDirPathString(&newCborDir)
+	if err != nil {
+		message = "Error Occured"
+		//err alredy set
+		return
+	}
+	sdk.imagesDir = newCborDir
+	message = "successfully updated"
+	err = nil
+	return
 }
 func (sdk *SDKCore) GetCborDir() string {
 	return sdk.cborDir
