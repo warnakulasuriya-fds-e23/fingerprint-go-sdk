@@ -76,14 +76,14 @@ func (sdk *SDKCore) UpdateCborDir(newCborDir string) (message string, err error)
 func (sdk *SDKCore) GetCborDir() string {
 	return sdk.cborDir
 }
-func (sdk *SDKCore) LoadImages() {
-	sdkutils.LoadImagesDirToGallery(sdk.gallery, sdk.imagesDir)
+func (sdk *SDKCore) LoadImages() error {
+	return sdkutils.LoadImagesDirToGallery(sdk.gallery, sdk.imagesDir)
 }
-func (sdk *SDKCore) LoadCborfiles() {
-	sdkutils.LoadCborDirToGallery(sdk.gallery, sdk.cborDir)
+func (sdk *SDKCore) LoadCborfiles() error {
+	return sdkutils.LoadCborDirToGallery(sdk.gallery, sdk.cborDir)
 }
-func (sdk *SDKCore) SaveGallery() {
-	sdkutils.SaveGalleryToCborDir(sdk.gallery, sdk.cborDir)
+func (sdk *SDKCore) SaveGallery() error {
+	return sdkutils.SaveGalleryToCborDir(sdk.gallery, sdk.cborDir)
 }
 func (sdk *SDKCore) Extract(imagePath string) (template *templates.SearchTemplate) {
 	template = sdk.extract(imagePath)
