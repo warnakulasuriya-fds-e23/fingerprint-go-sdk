@@ -42,7 +42,10 @@ func ProcessDirPathString(pathString *string) error {
 	if err != nil {
 		switch {
 		case os.IsNotExist(err):
-			return &ErrPathAccess{Path: originalPath, Permission: "Existence", Cause: err}
+			errMkdir := os.MkdirAll(cleanedPath, os.ModePerm)
+			if errMkdir != nil {
+				return fmt.Errorf("the directory %s doesnt exist. Attempt to create that directory has failed because %w ", originalPath, errMkdir)
+			}
 
 		case os.IsPermission(err):
 			return &ErrPathAccess{Path: originalPath, Permission: "Read/Write", Cause: err}
