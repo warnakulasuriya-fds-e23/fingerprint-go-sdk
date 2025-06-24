@@ -97,6 +97,10 @@ func (sdk *SDKCore) Identify(probe *templates.SearchTemplate) (isMatched bool, d
 	isMatched, discoveredId, err = sdk.identify(probe)
 	return
 }
+func (sdk *SDKCore) Enroll(newEntry *templates.SearchTemplate, id string) (err error) {
+	err = sdk.enroll(newEntry, id)
+	return
+}
 func (sdk *SDKCore) GetAsByteArray(probe *templates.SearchTemplate) (data *[]byte, err error) {
 	data, err = sdk.getAsByteArray(probe)
 	return
