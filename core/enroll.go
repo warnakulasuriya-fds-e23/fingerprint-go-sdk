@@ -8,7 +8,10 @@ import (
 )
 
 func (sdk *SDKCore) enroll(newEntry *templates.SearchTemplate, id string) (err error) {
-	// TODO: perform a quality check on newEntry
+	err = sdk.duplicationChecker(newEntry, id)
+	if err != nil {
+		return
+	}
 	*sdk.gallery = append(*sdk.gallery, &entities.SearchTemplateRecord{Id: id, Template: *newEntry})
 	log.Printf("appended template of %s to gallery\n", id)
 	return nil
