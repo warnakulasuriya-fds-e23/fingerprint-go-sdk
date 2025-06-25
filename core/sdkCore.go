@@ -82,7 +82,7 @@ func (sdk *SDKCore) UpdateCborDir(newCborDir string) (message string, err error)
 		//err alredy set
 		return
 	}
-	sdk.imagesDir = newCborDir
+	sdk.cborDir = newCborDir
 	message = "successfully updated"
 	err = nil
 	return
