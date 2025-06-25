@@ -12,7 +12,7 @@ func (sdk *SDKCore) duplicationChecker(templateToCheck *templates.SearchTemplate
 		if errMatchProcess != nil {
 			return fmt.Errorf("within duplication checker there was an error while running the match process between the provided template of id %s and the in memory template of %s, because %w", idToCheck, record.Id, errMatchProcess)
 		}
-		if isMatch == true {
+		if isMatch {
 			return fmt.Errorf("running duplication checker a matching template under the id %s was founded for the provided template under provided id %s", record.Id, idToCheck)
 		}
 		if record.Id == idToCheck {

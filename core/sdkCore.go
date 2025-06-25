@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"runtime"
 
@@ -21,6 +22,7 @@ type SDKCore struct {
 	cborDir            string
 	cntx               context.Context
 	matchThreshold     float64
+	initialized        bool
 }
 
 func NewSDKCore(imagesDir string, cborDir string) (*SDKCore, error) {
@@ -40,6 +42,7 @@ func NewSDKCore(imagesDir string, cborDir string) (*SDKCore, error) {
 		cborDir:            cborDir,
 		cntx:               cntx,
 		matchThreshold:     matchThreshold,
+		initialized:        true,
 	}
 	log.Println("SDK core has been initialized")
 
@@ -57,6 +60,17 @@ func (sdk *SDKCore) UpdateImageDir(newImagesDir string) (message string, err err
 	message = "successfully updated"
 	err = nil
 	return
+}
+func (sdk *SDKCore) GetStaus() string {
+	return fmt.Sprintf(
+		" Sdk intialization: %t, match threshold: %f, number template records stored in gallery: %d, current imagesDir: %s, current cborDir: %s",
+		sdk.initialized,
+		sdk.matchThreshold,
+		len(*sdk.gallery),
+		sdk.imagesDir,
+		sdk.cborDir,
+	)
+
 }
 func (sdk *SDKCore) GetImagesDir() string {
 	return sdk.imagesDir
